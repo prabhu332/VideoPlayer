@@ -16,6 +16,7 @@ class VideoPlayer extends Component {
         canvasHeight: 360,
         isPlaying: false,
         imageCounter: 0,
+        imageCounterLimit: 8000,
         fps: 10,
         interval: 50,
         currentSource: null,
@@ -37,6 +38,12 @@ class VideoPlayer extends Component {
     }
     getNextImage = () => {
         let newImageCounter = this.state.imageCounter + 1;
+        if(newImageCounter > this.state.imageCounterLimit){
+            newImageCounter = 1;
+            setTimeout(function(){
+                mainThis.initPlayer();
+            }, 10);
+        }
         let src = '/frames/s_' + Utils.padLeadingZeros(newImageCounter, 8) + '.jpg';
         this.setState({
             imageCounter: newImageCounter,
