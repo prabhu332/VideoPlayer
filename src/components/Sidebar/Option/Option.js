@@ -7,7 +7,7 @@ const Option = props => {
         classNames.push(styles.active)   
     }
     return (
-        <div className={classNames.join(' ')} onClick={props.clicked} isActive>
+        <div className={classNames.join(' ')} onClick={props.clicked}>
             <div className={styles.icon_holder}>
                 {props.option.icon}
             </div>

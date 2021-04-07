@@ -166,6 +166,17 @@ class VideoPlayer extends Component {
         newState.playerCanvas = document.getElementById('player');
         newState.playerContext = newState.playerCanvas.getContext('2d');
         this.setState(newState);
+        document.body.onkeyup = function(e){
+            if(e.code === 'Space' && document.activeElement.tagName !== 'TEXTAREA'){
+                try {
+                    document.getElementById('play_pause_btn').click();
+                }
+                catch (e) {
+                    console.log(e);
+                }            
+            }
+        };  
+        
     }
         
     render (){
