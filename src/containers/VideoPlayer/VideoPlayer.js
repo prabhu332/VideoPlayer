@@ -98,30 +98,37 @@ class VideoPlayer extends Component {
         })
     }
     changeVideoSize = (type) => {
-        let newObject = {}
+        let original = {
+            width: this.state.originalWidth,
+            height: this.state.originalHeight
+        }
+        let minSize, maxSize, newObject = {}
         switch(type.toLowerCase()) {
-            case 'landscape': 
+            case 'landscape':
+                maxSize = original.width > original.height ? original.width : original.height;
                 newObject = {
-                    canvasWidth: 480,
-                    canvasHeight: 360
+                    canvasWidth: maxSize,
+                    canvasHeight: (maxSize/16)*9
                 }
             break;
-            case 'portrait': 
+            case 'portrait':
+                minSize = original.width > original.height ? original.height : original.width;
                 newObject = {
-                    canvasWidth: 202.5,
-                    canvasHeight: 360
+                    canvasWidth: (minSize/16)*9,
+                    canvasHeight: minSize
                 }
             break;
-            case 'square': 
+            case 'square':
+                minSize = original.width > original.height ? original.height : original.width;
                 newObject = {
-                    canvasWidth: 360,
-                    canvasHeight: 360
+                    canvasWidth: minSize,
+                    canvasHeight: minSize
                 }
                 break;
-            default: 
+            default:
                 newObject = {
-                    canvasWidth: 480,
-                    canvasHeight: 360
+                    canvasWidth: original.width,
+                    canvasHeight: original.height
                 }
         }
         this.setState(newObject)
