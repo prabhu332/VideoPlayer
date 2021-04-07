@@ -1,0 +1,31 @@
+.video_player{
+    width: 70%;
+    .title{
+        font-weight: bold;
+        padding-bottom: 20px;
+        font-size: 16px;
+    }
+    .player_holder{
+        text-align: center;
+        width: 480px;
+        margin: 0 auto;
+        position: relative;
+        canvas { 
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 1s;
+        }
+        .sub_title{
+            text-align: left;
+            position: absolute;
+            left: 10%;
+            bottom: 15px;
+            width: calc(80% - 40px);
+            color: #ffe456;
+            background: #000;
+            padding: 5px 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+    }
+}

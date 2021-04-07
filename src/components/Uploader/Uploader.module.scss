@@ -1,0 +1,64 @@
+.upload_frame_container{
+    padding: 50px;
+    width: 30%;
+    text-align: center;
+    > div{
+        background: #ff9735;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 25px 0;
+        position: relative;
+    }
+    .add_frame{
+        cursor: pointer;
+    }
+    .close_icon{
+        cursor: pointer;
+        border-radius: 50%;
+        position: absolute;
+        top: -11px;
+        right: -11px;
+        background: #ff9735;
+        border: 1px solid #ff9735;
+        &:hover{
+            box-shadow: 0px 0px 5px 0px #000;
+        }
+    }
+    .upload_link{
+        cursor: pointer;
+        input{
+            display: none;
+        }
+    }
+    .file_handler{
+        padding: 5px 0;
+        .filename{
+            position: absolute;
+            top: -30px;
+            color: #b9b9b9;
+            width: 100%;
+        }
+        input{
+            border: none;
+            outline: none;
+            width: 25px;
+            line-height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+        button{
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            background: none;
+            outline: none;
+            border: none;
+            padding: 0 20px;
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid;
+        }
+    }
+}

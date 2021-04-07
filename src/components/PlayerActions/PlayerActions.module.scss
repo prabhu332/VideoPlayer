@@ -1,0 +1,35 @@
+.play_button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    line-height: 55px;
+    background-color: #ff9735;
+    font-size: 55px;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.action_hodler{
+    width: 70%;
+    padding: 50px;
+    .button_holder{
+        float: left;
+        button{
+            max-width: 100%;
+        }
+    }
+    .input_holder{
+        padding-left: 100px;
+        textarea{
+            width: 100%;
+            height: 55px;
+            resize: none;
+            padding: 10px;
+            font-size: 20px;
+        }
+    }
+}
