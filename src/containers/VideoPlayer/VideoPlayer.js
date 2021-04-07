@@ -14,13 +14,13 @@ class VideoPlayer extends Component {
         canvasWidth: 480,
         canvasHeight: 360,
         isPlaying: false,
-        imageCounter: 300,
+        imageCounter: 0,
         fps: 10,
         interval: 50,
         currentSource: null,
         isUploaderReady: false,
         uploadedFilePlayStart: null,
-        uploadTimeoutTracker: null,
+        uploadedTimeoutTracker: null,
         originalWidth: 480,
         originalHeight: 360
     }
@@ -40,27 +40,32 @@ class VideoPlayer extends Component {
         this.setState({
             imageCounter: newImageCounter,
             currentSource: src
-        })
+        });
         return src;
     }
     initPlayer = (e, isDirectPlay) => {
-        let newState = { isPlaying: (isDirectPlay || !this.state.isPlaying) }
+        let newState = { isPlaying: (isDirectPlay || !this.state.isPlaying) };
         if(!this.state.isPlaying && !isDirectPlay && this.state.uploadedFileName){
             let mainThis = this;
-            this.setState({
-                currentSource: this.state.uploaddFileSrc,
-                ...newState
-            });
-            mainThis.changeImage(this.state.uploaddFileSrc)
-            setTimeout(function(){
-                mainThis.initPlayer(e, true)
-            }, mainThis.state.uploadedFileDuration*1000)
+            mainThis.changeImage(this.state.uploaddFileSrc);
+            newState.uploadedFilePlayStart = new Date();
+            newState.uploadedTimeoutTracker = setTimeout(function(){
+                mainThis.initPlayer(e, true);
+            }, mainThis.state.uploadedFileDuration);
+            newState.currentSource = this.state.uploaddFileSrc;
+            this.setState(newState);
             return false;
         }
         let mainThis = this;
         if(!this.state.playerCanvas){
-            newState.playerCanvas = document.getElementById('player')
-            newState.playerContext = newState.playerCanvas.getContext('2d')
+            newState.playerCanvas = document.getElementById('player');
+            newState.playerContext = newState.playerCanvas.getContext('2d');
+        }
+        if(!newState.isPlaying &&  this.state.uploadedTimeoutTracker){
+            console.log('cleared timout')
+            clearTimeout(this.state.uploadedTimeoutTracker);
+            newState.uploadedTimeoutTracker = null;
+            newState.uploadedFileDuration = this.state.uploadedFileDuration - (new Date() - this.state.uploadedFilePlayStart);
         }
         this.setState(newState,() => {
             if(newState.isPlaying){
@@ -68,24 +73,26 @@ class VideoPlayer extends Component {
                     let src = mainThis.getNextImage();
                     mainThis.changeImage(src)
                 }, this.state.interval);
-                this.setState({playerTracker: playerTracker})
+                this.setState({playerTracker: playerTracker});
             }
             else{
-                clearInterval(this.state.playerTracker)
+                if(this.state.playerTracker){
+                    clearInterval(this.state.playerTracker);
+                }
             }
         });
     }
     openUploader = () => {
-        this.setState({ isUploaderReady: true })
+        this.setState({ isUploaderReady: true });
     }
     closeUploader = () => {
-        this.setState({ isUploaderReady: false })
+        this.setState({ isUploaderReady: false });
     }
     triggerFile = () => {
-        document.getElementById('upload_file').click()
+        document.getElementById('upload_file').click();
     }
     handleSubTitle = (e) => {
-        this.setState({ subTitle: e.target.value })
+        this.setState({ subTitle: e.target.value });
     }
     handleFile = (e) => {
         let file = e.target.files[0];
@@ -101,63 +108,62 @@ class VideoPlayer extends Component {
         let original = {
             width: this.state.originalWidth,
             height: this.state.originalHeight
-        }
-        let minSize, maxSize, newObject = {}
+        };
+        let minSize, maxSize, newState = {};
         switch(type.toLowerCase()) {
             case 'landscape':
                 maxSize = original.width > original.height ? original.width : original.height;
-                newObject = {
+                newState = {
                     canvasWidth: maxSize,
                     canvasHeight: (maxSize/16)*9
-                }
+                };
             break;
             case 'portrait':
                 minSize = original.width > original.height ? original.height : original.width;
-                newObject = {
+                newState = {
                     canvasWidth: (minSize/16)*9,
                     canvasHeight: minSize
-                }
+                };
             break;
             case 'square':
                 minSize = original.width > original.height ? original.height : original.width;
-                newObject = {
+                newState = {
                     canvasWidth: minSize,
                     canvasHeight: minSize
-                }
+                };
                 break;
             default:
-                newObject = {
+                newState = {
                     canvasWidth: original.width,
                     canvasHeight: original.height
-                }
-        }
-        this.setState(newObject)
-        document.getElementById('player_holder').style.width = newObject.canvasWidth.toString() + 'px';
-        this.changeImage(this.state.currentSource)
+                };
+        };
+        let mainThis = this;
+        this.setState(newState, () => {
+            document.getElementById('player_holder').style.width = newState.canvasWidth.toString() + 'px';
+            mainThis.changeImage(this.state.currentSource);
+        });
     }
     handleDuration = () => {
-        let duration = parseInt(document.getElementById('duration').value)
-        console.log(duration)
+        let duration = parseInt(document.getElementById('duration').value);
         if(isNaN(duration) || duration < 1){
-            alert('Enter valid number')
+            alert('Enter valid number');
             document.getElementById('duration').value = '';
             return false;
         }
-        console.log(duration)
         this.setState({
-            uploadedFileDuration: duration,
+            uploadedFileDuration: duration*1000,
             isUploaderReady: false,
             isUploadedFileReady: false,
         }, () => {
-            alert('File added successfully')
-        })
-        // this.changeImage(this.state.uploaddFileSrc)
+            alert('File added successfully');;
+        });
     }
     componentDidMount(){
-        let newState = {}
-        newState.playerCanvas = document.getElementById('player')
-        newState.playerContext = newState.playerCanvas.getContext('2d')
-        this.setState(newState)
+        let newState = {};
+        newState.playerCanvas = document.getElementById('player');
+        newState.playerContext = newState.playerCanvas.getContext('2d');
+        this.setState(newState);
     }
         
     render (){

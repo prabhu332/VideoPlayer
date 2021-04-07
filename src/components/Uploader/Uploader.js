@@ -13,7 +13,7 @@ const Uploader = props => {
                 <BsXCircle className={styles.close_icon} onClick={props.closeUploader}/>
                 <div className={styles.upload_link} onClick={props.triggerFile}>
                     Upload Frame
-                    <input type='file' id='upload_file' accept="image/*" onChange={(e) => props.handleFile(e)} />
+                    <input type='file' id='upload_file' accept="image/png,image/jpg" onChange={(e) => props.handleFile(e)} />
                 </div>
             </div>
         );
