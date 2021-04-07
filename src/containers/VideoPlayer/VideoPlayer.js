@@ -40,6 +40,7 @@ class VideoPlayer extends Component {
         let newImageCounter = this.state.imageCounter + 1;
         if(newImageCounter > this.state.imageCounterLimit){
             newImageCounter = 1;
+            let mainThis = this;
             setTimeout(function(){
                 mainThis.initPlayer();
             }, 10);
