@@ -8,6 +8,7 @@ import Canvas from '../../components/Canvas/Canvas';
 
 class VideoPlayer extends Component {
     state = {
+        activeSizeOption: 'Original',
         playerCanvas: null,
         playerContext: null,
         playerTracker: null,
@@ -104,7 +105,7 @@ class VideoPlayer extends Component {
             uploadedFileName: file.name
         })
     }
-    changeVideoSize = (type) => {
+    changeCanvasSize = (type) => {
         let original = {
             width: this.state.originalWidth,
             height: this.state.originalHeight
@@ -139,6 +140,7 @@ class VideoPlayer extends Component {
                 };
         };
         let mainThis = this;
+        newState.activeSizeOption = type;
         this.setState(newState, () => {
             document.getElementById('player_holder').style.width = newState.canvasWidth.toString() + 'px';
             mainThis.changeImage(this.state.currentSource);
@@ -175,7 +177,7 @@ class VideoPlayer extends Component {
                         canvasHeight={this.state.canvasHeight}
                         subTitle={this.state.subTitle}
                     />
-                    <Sidebar clicked={this.changeVideoSize}/>
+                    <Sidebar clicked={this.changeCanvasSize} activeSizeOption={this.state.activeSizeOption} />
                 </div>
                 <div className={styles.action_and_frames_holder}>
                     <PlayerActions

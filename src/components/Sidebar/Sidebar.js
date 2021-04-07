@@ -10,7 +10,7 @@ const Sidebar = props => {
         { name: 'Portrait', size: '9:16', icon: <BsPhone /> },
         { name: 'Square', size: '1:1', icon: <BsApp />}
     ];
-    let options = data.map(option => <Option key={option.name} option={option} clicked={() => props.clicked(option.name)}/>)
+    let options = data.map(option => <Option key={option.name} isActive={option.name == props.activeSizeOption} option={option} clicked={() => props.clicked(option.name)}/>)
     return (
         <div className={styles.sidebar}>
             <div className={styles.title}>Size Options</div>
