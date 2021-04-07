@@ -1,5 +1,6 @@
 .upload_frame_container{
     padding: 50px;
+    padding-top: 15px;
     width: 30%;
     text-align: center;
     > div{
@@ -49,6 +50,7 @@
             text-align: center;
         }
         button{
+            cursor: pointer;
             color: #fff;
             font-size: 20px;
             font-weight: bold;
@@ -59,6 +61,9 @@
             padding-top: 10px;
             margin-top: 10px;
             border-top: 1px solid;
+            &:hover{
+                color: #eee;
+            }
         }
     }
 }

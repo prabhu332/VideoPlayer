@@ -167,7 +167,7 @@ class VideoPlayer extends Component {
         newState.playerContext = newState.playerCanvas.getContext('2d');
         this.setState(newState);
         document.body.onkeyup = function(e){
-            if(e.code === 'Space' && document.activeElement.tagName !== 'TEXTAREA'){
+            if(e.code === 'Space' && (document.activeElement.tagName !== 'TEXTAREA' || document.activeElement.readOnly)){
                 try {
                     document.getElementById('play_pause_btn').click();
                 }
