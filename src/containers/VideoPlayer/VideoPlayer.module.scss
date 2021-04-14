@@ -60,3 +60,17 @@
         display: flex;
     }
 }
+.feature_bar_container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    .trigger{
+        position: absolute;
+        cursor: pointer;
+        right: 0px;
+        padding: 10px;
+        font-size: 20px;
+        z-index: 1;
+    }
+}

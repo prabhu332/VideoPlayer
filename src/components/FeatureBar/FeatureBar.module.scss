@@ -1,0 +1,20 @@
+.feature_bar{
+    position: absolute;
+    top: 0;
+    right: calc(-100% - 60px);
+    background: #fff;
+    padding: 30px;
+    padding-top: 50px;
+    border-left: 1px solid #ddd;
+    width: 100%;
+    height: calc(100vh - 100px);
+    transition: all 0.5s;
+    &.visible{
+        right: 0;
+    }
+    .title{
+        font-weight: bold;
+        padding-bottom: 20px;
+        font-size: 16px;
+    }
+}
