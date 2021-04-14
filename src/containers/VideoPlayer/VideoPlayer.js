@@ -22,6 +22,7 @@ class VideoPlayer extends Component {
         imageCounterLimit: 8000,
         fps: 10,
         interval: 100,
+        totalDurationInSeconds: 800,
         currentSource: null,
         isUploaderReady: false,
         isUploadedFileReady: false,
@@ -193,7 +194,12 @@ class VideoPlayer extends Component {
     handleFpsChange = (e, value) => {
         let mainThis = this;
         let interval = 1000/value;
-        this.setState({ fps: value, interval: interval },() => mainThis.reinitPlayerTracker());
+        let duration = Math.ceil(this.state.imageCounterLimit/value);
+        this.setState({
+            fps: value,
+            interval: interval,
+            totalDurationInSeconds: duration
+        },() => mainThis.reinitPlayerTracker());
     }
     componentDidMount(){
         let newState = {};
@@ -252,7 +258,10 @@ class VideoPlayer extends Component {
                         <BsFillXCircleFill className={styles.trigger} onClick={this.showHideFeatureBar}/> :
                         <BsFillGearFill className={styles.trigger} onClick={this.showHideFeatureBar}/>
                     }
-                    <FeatureBar isVisible={this.state.isFeatureBarVisible} fps={this.state.fps} handleFpsChange={this.handleFpsChange}/>
+                    <FeatureBar 
+                        mainState={this.state}
+                        handleFpsChange={this.handleFpsChange}
+                        />
                 </div>
             </div>
         );
